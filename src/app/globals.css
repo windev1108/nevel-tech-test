@@ -3,8 +3,8 @@
 /* ===== CSS Variables ===== */
 :root {
   /* Background & Foreground */
-  --background: white;
-  --foreground: #171717;
+  --background: #131415;
+  --foreground: #ededed;
 
   /* Primary Colors */
   --primary: #ffc700;
