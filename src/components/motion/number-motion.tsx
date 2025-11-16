@@ -11,13 +11,19 @@ interface NumberMotionProps {
   precision?: number;
   compact?: boolean;
   locale?: string;
-  range?: number; // % range, ex:0.05 = ±5%
+
+  jitterMode?: 'percent' | 'value';
+  range?: number;
+  jitterValue?: number;
   interval?: number;
   enableJump?: boolean;
-  min?: number; // min limit
-  max?: number; // max limit
+
+  min?: number;
+  max?: number;
   integerOnly?: boolean;
-  enableFormat?: boolean; // Enable/disable number formatting
+  enableFormat?: boolean;
+
+  showDecimal?: boolean; // NEW OPTION
 }
 
 const NumberMotion: React.FC<NumberMotionProps> = ({
@@ -28,13 +34,19 @@ const NumberMotion: React.FC<NumberMotionProps> = ({
   precision = 2,
   compact = true,
   locale = 'en-US',
-  range = 0.02, // default range ±2%
+
+  jitterMode = 'percent',
+  range = 0.02,
+  jitterValue = 5,
   interval = 5000,
   enableJump = true,
-  integerOnly = false,
-  enableFormat = true, // Default to true for backward compatibility
+
   min,
   max,
+  integerOnly = false,
+  enableFormat = true,
+
+  showDecimal = true, // NEW default=true
 }) => {
   const [animatedValue, setAnimatedValue] = useState(value);
 
@@ -46,27 +58,28 @@ const NumberMotion: React.FC<NumberMotionProps> = ({
     if (!enableJump) return;
 
     const id = setInterval(() => {
-      const percentOffset = (Math.random() * 2 - 1) * range;
-      let newValue = value * (1 + percentOffset);
+      let newValue = value;
 
-      // only get integer
-      if (integerOnly) {
-        newValue = Math.round(newValue);
+      if (jitterMode === 'percent') {
+        const percentOffset = (Math.random() * 2 - 1) * range;
+        newValue = value * (1 + percentOffset);
       }
 
-      // If exceeded, force to min/max
-      if (typeof min === 'number' && newValue < min) {
-        newValue = min;
+      if (jitterMode === 'value') {
+        const offset = (Math.random() * 2 - 1) * jitterValue;
+        newValue = value + offset;
       }
-      if (typeof max === 'number' && newValue > max) {
-        newValue = max;
-      }
+
+      if (integerOnly) newValue = Math.round(newValue);
+
+      if (typeof min === 'number' && newValue < min) newValue = min;
+      if (typeof max === 'number' && newValue > max) newValue = max;
 
       setAnimatedValue(newValue);
     }, interval);
 
     return () => clearInterval(id);
-  }, [value, range, interval, enableJump, min, max]);
+  }, [value, jitterMode, range, jitterValue, interval, integerOnly, min, max, enableJump]);
 
   return (
     <NumberFlow
@@ -75,11 +88,15 @@ const NumberMotion: React.FC<NumberMotionProps> = ({
       format={
         enableFormat
           ? {
-              style: 'decimal',
-              notation: compact ? 'compact' : 'standard',
-              minimumFractionDigits: compact ? 0 : precision,
-              maximumFractionDigits: precision,
-            }
+            style: 'decimal',
+            notation: compact ? 'compact' : 'standard',
+            minimumFractionDigits: !showDecimal
+              ? 0
+              : compact
+                ? 0
+                : precision,
+            maximumFractionDigits: !showDecimal ? 0 : precision,
+          }
           : undefined
       }
       prefix={prefix}

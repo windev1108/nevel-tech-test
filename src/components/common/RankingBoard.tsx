@@ -101,6 +101,7 @@ const RankingBoard: React.FC<RankingTableProps> = ({ fullWidth = true, maxWidth 
                                         <span className="text-neutral-0 font-medium xl:text-base text-[10px]">
                                             <NumberMotion
                                                 compact={false}
+                                                showDecimal={false}
                                                 value={item.quantity}
                                             />
                                         </span>
