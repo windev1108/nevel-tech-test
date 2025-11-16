@@ -108,7 +108,7 @@ const Footer = () => {
         <div className="grid xl:grid-cols-4 grid-cols-2 xl:gap-10 gap-6">
           {NAV_FOOTER.map((item) => (
             <div key={item.title} className='flex flex-col gap-3'>
-              <h1 className='italic font-extrabold uppercase'>{item.title}</h1>
+              <h1 className='italic font-extrabold uppercase xl:text-base text-sm'>{item.title}</h1>
               <div className="flex flex-col gap-2">
                 {item.items.map((x) => (
                   <Fragment key={x.label || x.img}>
@@ -119,7 +119,7 @@ const Footer = () => {
 
                       :
                       <Link href={x.href ?? '/'}>
-                        <span className='text-sm text-neutral-200 hover:underline'>{x.label}</span>
+                        <span className='xl:text-sm text-xs text-neutral-200 hover:underline'>{x.label}</span>
                       </Link>
                     }
                   </Fragment>

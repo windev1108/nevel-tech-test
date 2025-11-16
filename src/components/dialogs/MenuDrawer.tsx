@@ -6,14 +6,16 @@ import { NAV_LINKS } from '../Layout/NavMenu';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import BurgerMotion from '../motion/burger-motion';
+import { useDeferredValue } from 'react';
 
 const MenuDrawer = ({ className, opened, toggle }: { className?: string, opened: boolean, toggle: () => void }) => {
   const pathname = usePathname();
+  const openedDeferred = useDeferredValue(opened)
 
   return (
-    <Drawer open={opened} onOpenChange={toggle}>
+    <Drawer open={openedDeferred} onOpenChange={toggle}>
       <DrawerTrigger>
-        <BurgerMotion isActive={opened} />
+        <BurgerMotion isActive={openedDeferred} />
       </DrawerTrigger>
       <DrawerContent hideOverlay className='h-[calc(100vh-64px)] max-h-screen! border-none rounded-none! bg-secondary-800' >
         <DrawerTitle className='sr-only'></DrawerTitle>
@@ -23,6 +25,7 @@ const MenuDrawer = ({ className, opened, toggle }: { className?: string, opened:
             return (
               <div
                 key={link.href}
+                onClick={toggle}
                 className='relative w-full'
               >
                 {/* Parent link */}
