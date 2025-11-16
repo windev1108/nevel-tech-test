@@ -104,7 +104,7 @@ const Footer = () => {
 
   return (
     <footer className='border-t border-secondary-600'>
-      <div className='relative container mx-auto py-10 flex flex-col gap-10'>
+      <div className='relative container mx-auto py-10 flex flex-col xl:gap-10 gap-5'>
         <div className="grid xl:grid-cols-4 grid-cols-2 xl:gap-10 gap-6">
           {NAV_FOOTER.map((item) => (
             <div key={item.title} className='flex flex-col gap-3'>
@@ -137,7 +137,7 @@ const Footer = () => {
           <span className='xl:text-sm text-xs text-neutral-200 xl:text-start text-center'>For designated models of Xiaomi smartphone, you can enjoy the warranty services for your device at designated Xiaomi.</span>
         </div>
 
-        <span className='xl:text-sm text-xs text-neutral-200'>Customers should provide a valid purchase proof and warranty card. After inspected by the Xiaomi authorizedservice center and confirmed that the smartphone meets the warranty conditions, you can enjoy the in-warranty service for free².Warranty determination rules are subjected to the local service center.</span>
+        <span className='xl:text-sm text-xs text-neutral-200 xl:text-start text-center'>Customers should provide a valid purchase proof and warranty card. After inspected by the Xiaomi authorizedservice center and confirmed that the smartphone meets the warranty conditions, you can enjoy the in-warranty service for free².Warranty determination rules are subjected to the local service center.</span>
 
         <div className='py-4 rounded-xl text-center bg-secondary-800 xl:text-sm text-xs'>
           © Copyright 2025. All Rights Reserved
