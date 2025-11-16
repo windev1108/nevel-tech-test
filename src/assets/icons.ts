@@ -13,6 +13,7 @@ import astropay from './svg/astropay.svg';
 import visa from './svg/visa.svg';
 import ssl from './svg/ssl.svg';
 import burger from './svg/burger.svg';
+import arrowDropDown from './svg/arrow_drop_down.svg';
 
 const IconList = {
   logo,
@@ -27,7 +28,8 @@ const IconList = {
   visa,
   ssl,
   astropay,
-  burger
+  burger,
+  arrowDropDown
 };
 
 type SVGAttributes = Partial<SVGProps<SVGSVGElement>>;

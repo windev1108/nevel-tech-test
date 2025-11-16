@@ -10,7 +10,7 @@ const HeroDialog = ({ children }: { children: React.ReactNode }) => {
             <DialogTrigger asChild>
                 {children}
             </DialogTrigger>
-            <DialogContent className='border-none p-0 w-[350px] h-[404px] shadow-md bg-transparent '>
+            <DialogContent className='border-secondary-800 p-0 w-[350px] h-[404px] shadow-md bg-transparent '>
                 <div className='absolute -bottom-4 inset-x-0 z-20 flex items-center justify-center'>
                     <Button className='xl:min-w-[147px] min-w-[113px'>SEE MORE</Button>
                 </div>

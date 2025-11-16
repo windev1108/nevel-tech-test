@@ -12,6 +12,7 @@ import NavMenu from './NavMenu';
 import { Icons } from '@/assets/icons';
 import { Button } from '../ui/button';
 import MenuDrawer from '../dialogs/MenuDrawer';
+import LanguageSelector from '../common/LanguageSelector';
 
 const customEase: Easing = [0.76, 0, 0.24, 1];
 
@@ -19,27 +20,48 @@ const Header = () => {
   const [isScrollDown, setIsScrollDown] = useState(false);
   const isMd = useIsMd();
   const [visibleMenu, { close: closeMenu, toggle: toggleMenu }] = useDisclosure(false);
-  const [visibleHeader, { close: closeHeader, open: openHeader }] = useDisclosure(true);
+  const [visibleHeader, setVisibleHeader] = useState(true);
 
   const { scrollY } = useScroll();
-  const lastScrollY = useRef(scrollY.get());
+  const lastScrollY = useRef(scrollY.get()); // Initialize with current scroll value
+  const isAnimating = useRef(false);
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     const previous = lastScrollY.current;
 
-    if (Math.abs(latest - previous) < 5) return;
+    // Ignore small scroll changes
+    if (Math.abs(latest - previous) < 10) return; // Increase threshold
 
+    // Update scroll direction indicator
     setIsScrollDown(latest > 100);
 
     if (isMd) {
-      if (latest > previous && visibleHeader) {
-        closeHeader();
+      const scrollingDown = latest > previous;
+      const scrollingUp = latest < previous;
+
+      // Only animate when state actually needs to change
+      if (scrollingDown && latest > 100 && visibleHeader && !isAnimating.current) {
+        isAnimating.current = true;
+        setVisibleHeader(false);
         if (visibleMenu) closeMenu();
-      } else if (latest < previous && !visibleHeader) {
-        openHeader();
+
+        setTimeout(() => {
+          isAnimating.current = false;
+        }, 700); // Slightly longer than animation duration
+      }
+      else if (scrollingUp && !visibleHeader && !isAnimating.current) {
+        isAnimating.current = true;
+        setVisibleHeader(true);
+
+        setTimeout(() => {
+          isAnimating.current = false;
+        }, 700);
       }
     } else {
-      if (!visibleHeader) openHeader();
+      // Mobile - always show header
+      if (!visibleHeader) {
+        setVisibleHeader(true);
+      }
     }
 
     lastScrollY.current = latest;
@@ -65,23 +87,25 @@ const Header = () => {
     <motion.header
       animate={visibleHeader ? 'visible' : 'hidden'}
       initial='visible'
-      variants={{ visible: { y: 0 }, hidden: { y: '-140%' } }}
-      transition={{ duration: 0.6, ease: 'easeInOut' }}
-      className={cn('fixed top-0 z-50 w-full transition-all duration-500', {
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: '-100%' }
+      }}
+      transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+      className={cn('fixed z-50 w-full', {
         'top-0': !isScrollDown,
         'xl:top-2 top-0': isScrollDown,
       })}
+      style={{ willChange: 'transform' }} // Optimize performance
     >
-      <motion.div
-        layout
+      <div
         className={cn(
-          'relative mx-auto container flex items-center justify-between xl:h-20 h-16 w-full xl:rounded-full shadow-md',
+          'relative mx-auto container flex items-center justify-between xl:h-20 h-16 w-full xl:rounded-full shadow-md transition-colors duration-300',
           {
             'bg-background': isScrollDown || visibleMenu,
             'shadow-none!': visibleMenu,
           }
         )}
-        transition={{ duration: 0.6, ease: customEase }}
       >
         <div className="flex items-center gap-10">
           <div className="flex items-center gap-4">
@@ -98,14 +122,11 @@ const Header = () => {
           </div>
 
           {/* Navigation Menu - Desktop */}
-          <motion.div
-            layout
-            initial={false}
-            transition={{ duration: 0.6, ease: customEase }}
+          <div
             className={cn('relative hidden h-full flex-1 items-center justify-center gap-8 lg:flex')}
           >
             <NavMenu visibleHeader={visibleHeader} />
-          </motion.div>
+          </div>
         </div>
 
         {/* Right Side Buttons */}
@@ -118,11 +139,9 @@ const Header = () => {
           </Button>
 
           {/* Language Selector */}
-          <button className="xl:block hidden text-white text-sm font-medium ml-2 hover:text-primary-300 transition-colors">
-            ENG ▼
-          </button>
+          <LanguageSelector />
         </div>
-      </motion.div>
+      </div>
     </motion.header>
   );
 };

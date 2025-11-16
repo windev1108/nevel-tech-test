@@ -37,7 +37,7 @@ const MenuDrawer = ({ className, opened, toggle }: { className?: string, opened:
                     className
                   )}
                 >
-                  <span>{link.label}</span>
+                  <span className='text-sm'>{link.label}</span>
                 </Link>
 
               </div>

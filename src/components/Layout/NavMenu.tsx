@@ -89,7 +89,7 @@ export default function NavMenu({ className, visibleHeader }: Props) {
                 className
               )}
             >
-              <span>{link.label}</span>
+              <span className='text-sm'>{link.label}</span>
             </Link>
 
             {/* Dropdown */}
