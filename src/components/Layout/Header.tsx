@@ -109,7 +109,7 @@ const Header = () => {
         </div>
 
         {/* Right Side Buttons */}
-        <div className="flex items-center xl:gap-2 gap-4">
+        <div className="flex items-center xl:gap-4 gap-2">
           <Button className='xl:min-w-[146px] min-w-[113px]'>
             SIGN UP
           </Button>
