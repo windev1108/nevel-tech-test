@@ -4,15 +4,15 @@ import { motion } from 'motion/react';
 
 import { cn } from '@/lib/utils';
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props {
   isActive: boolean;
+  className?: string
 }
 
 const BurgerMotion: FC<Props> = ({ isActive, className, ...props }) => {
   return (
-    <button
+    <motion.div
       className={cn('flex h-5 w-6 cursor-pointer flex-col justify-center gap-1.5', className)}
-      aria-label="Toggle menu"
       {...props}
     >
       {/* Top line */}
@@ -57,7 +57,7 @@ const BurgerMotion: FC<Props> = ({ isActive, className, ...props }) => {
           ease: [0.4, 0, 0.2, 1],
         }}
       />
-    </button>
+    </motion.div>
   );
 };
 
