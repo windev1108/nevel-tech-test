@@ -1,13 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import "./globals.css";
+import "../globals.css";
 import { siteConfig } from "@/config/site";
 import { fontSans, fontSerif } from "@/assets/font";
 import { cn } from "@/lib/utils";
-import Providers from "./providers";
 import { routing } from "@/i18n/routing";
-import { hasLocale } from "next-intl";
-import { notFound } from "next/navigation";
-import NotFound from "./not-found";
+import Providers from "../providers";
 
 
 export const metadata: Metadata = {
@@ -62,11 +59,12 @@ export function generateStaticParams() {
 
 export default async function RootLayout({
   children,
-  params: { locale }
+  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params
   return (
     <html lang={locale}>
       <body
