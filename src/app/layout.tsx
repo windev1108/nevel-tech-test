@@ -62,13 +62,11 @@ export function generateStaticParams() {
 
 export default async function RootLayout({
   children,
-  params
+  params: { locale }
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 }>) {
-  const { locale } = await params;
-
   return (
     <html lang={locale}>
       <body
