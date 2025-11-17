@@ -1,24 +1,30 @@
 import * as React from "react"
 import { motion, AnimatePresence } from "motion/react"
-import { Check, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/assets/icons"
+import useIntl from "@/hooks/useIntl"
 
 interface Language {
     code: string
     label: string
+    value: string
     flag?: string
 }
 
 const languages: Language[] = [
-    { code: "eng", label: "English" },
-    { code: "vi", label: "Viet Nam" },
+    { code: "eng", label: "English", value: 'en' },
+    { code: "vi", label: "Việt Nam", value: 'vi' },
 ]
+
+const LANGUAGE_MAPPING: Record<string, Language> = {
+    en: { code: "eng", label: "English", value: 'en' },
+    vi: { code: "vi", label: "Việt Nam", value: 'vi' },
+}
 
 export default function LanguageSelector() {
     const [isOpen, setIsOpen] = React.useState(false)
-    const [selectedLang, setSelectedLang] = React.useState<Language>(languages[0])
     const dropdownRef = React.useRef<HTMLDivElement>(null)
+    const { locale, switchLocale } = useIntl()
 
     // Close dropdown when clicking outside
     React.useEffect(() => {
@@ -33,8 +39,8 @@ export default function LanguageSelector() {
     }, [])
 
     const handleSelect = (lang: Language) => {
-        setSelectedLang(lang)
         setIsOpen(false)
+        switchLocale(lang.value)
     }
 
     return (
@@ -44,7 +50,7 @@ export default function LanguageSelector() {
                 onClick={() => setIsOpen(!isOpen)}
                 className="cursor-pointer w-[52px] flex items-center gap-0.5 text-white text-sm font-medium hover:text-primary-300 transition-colors"
             >
-                <span className="text-sm font-medium w-[31px]">{selectedLang.code.toUpperCase()}</span>
+                <span className="text-sm font-medium w-[31px] uppercase">{LANGUAGE_MAPPING[locale].code}</span>
                 <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
@@ -70,13 +76,13 @@ export default function LanguageSelector() {
                                 className={cn(
                                     "cursor-pointer w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors",
                                     "hover:bg-secondary-800",
-                                    selectedLang.code === lang.code ? "bg-accent text-primary" : "text-foreground"
+                                    locale === lang.value ? "bg-accent text-primary" : "text-foreground"
                                 )}
                             >
                                 <span className="flex items-center gap-2">
                                     <span>{lang.label}</span>
                                 </span>
-                                {selectedLang.code === lang.code && (
+                                {locale === lang.value && (
                                     <motion.div
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}

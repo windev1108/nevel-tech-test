@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import MainLayout from "../components/Layout/MainLayout";
 import { siteConfig } from "@/config/site";
 import { fontSans, fontSerif } from "@/assets/font";
 import { cn } from "@/lib/utils";
-import Preloader from "@/components/motion/preload";
+import Providers from "./providers";
+import { routing } from "@/i18n/routing";
+import { hasLocale } from "next-intl";
+import { notFound } from "next/navigation";
+import NotFound from "./not-found";
 
 
 export const metadata: Metadata = {
@@ -53,13 +56,21 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default async function RootLayout({
   children,
+  params
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+
   return (
-    <html lang='en'>
+    <html lang={locale}>
       <body
         suppressHydrationWarning
         className={cn(
@@ -72,9 +83,7 @@ export default function RootLayout({
         {/* Critical: CSS custom properties needed for layout */}
         {/* <RealViewport /> */}
         <div data-testid='app-container' className='flex min-h-screen flex-col'>
-          <Preloader>
-            <MainLayout>{children}</MainLayout>
-          </Preloader>
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>

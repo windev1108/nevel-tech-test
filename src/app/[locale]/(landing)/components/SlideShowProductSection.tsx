@@ -1,6 +1,7 @@
 import React from 'react';
 import CarouselWithControls from '@/components/common/CarouselWithControls';
 import { useIsMobile } from '@/hooks/useMediaQuery';
+import { useTranslations } from 'next-intl';
 
 interface ProductImage {
     id: number;
@@ -10,6 +11,7 @@ interface ProductImage {
 
 const SlideShowProductSections: React.FC = () => {
     const isMb = useIsMobile()
+    const t = useTranslations()
     const topProducts: ProductImage[] = [
         { id: 1, src: '/images/top-products/1.png', alt: 'Product 1' },
         { id: 2, src: '/images/top-products/2.png', alt: 'Product 2' },
@@ -34,7 +36,7 @@ const SlideShowProductSections: React.FC = () => {
             <CarouselWithControls
                 itemsToShow={isMb ? 3 : 6}
                 gap={isMb ? 8 : 16}
-                title="Top Products"
+                title={t('top_products')}
                 items={topProducts}
                 titleClassName="xl:text-2xl text-lg italic"
                 className="xl:mb-20 mb-10"
@@ -57,7 +59,7 @@ const SlideShowProductSections: React.FC = () => {
                 {/* Black Friday */}
                 <CarouselWithControls
                     itemsToShow={1}
-                    title="Black Friday"
+                    title={t('black_friday')}
                     items={blackFridayImages}
                     titleClassName="xl:text-2xl text-lg italic"
                     className="lg:col-span-2 col-span-4 xl:mb-0 mb-6"
@@ -76,7 +78,7 @@ const SlideShowProductSections: React.FC = () => {
                 <div className="relative lg:col-span-1 col-span-2">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="xl:text-2xl text-lg italic font-bold text-primary uppercase">
-                            New Products
+                            {t('new_products')}
                         </h2>
                     </div>
                     <div className="relative xl:h-60  h-[165px] xl:aspect-auto aspect-square  rounded-lg overflow-hidden cursor-pointer">
@@ -92,7 +94,7 @@ const SlideShowProductSections: React.FC = () => {
                 <div className="relative lg:col-span-1 col-span-2">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="xl:text-2xl text-lg italic font-bold text-primary uppercase">
-                            Sales
+                            {t('sales')}
                         </h2>
                     </div>
                     <div className="relative xl:h-60 h-[165px] xl:aspect-auto aspect-square rounded-lg overflow-hidden cursor-pointer">

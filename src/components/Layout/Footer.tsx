@@ -1,6 +1,7 @@
 'use client';
 
 import { Icon, Icons } from '@/assets/icons';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
@@ -11,86 +12,7 @@ interface INavItem {
   items: { label?: string, href?: string, img?: string }[]
 }
 
-const NAV_FOOTER: INavItem[] = [
-  {
-    title: 'About us',
-    items: [
-      {
-        label: 'Company Details',
-        href: '/'
-      },
-      {
-        label: 'Terms & Conditions',
-        href: '/'
-      },
-      {
-        label: 'Privacy Policy',
-        href: '/'
-      },
-      {
-        label: 'Affiliate',
-        href: '/'
-      }
-    ]
-  },
-  {
-    title: 'Help',
-    items: [
-      {
-        label: 'F.A.Q (Frequently Asked Questions)',
-        href: '/'
-      },
-      {
-        label: 'AML/KYC Policy',
-        href: '/'
-      },
-      {
-        label: 'Refund Policy',
-        href: '/'
-      },
-      {
-        label: 'Dispute Resolution',
-        href: '/'
-      }
-    ]
-  },
-  {
-    title: 'Our Products',
-    items: [
-      {
-        label: 'Product',
-        href: '/'
-      },
-      {
-        label: 'Contact',
-        href: '/'
-      },
-      {
-        label: 'Price',
-        href: '/'
-      },
-      {
-        label: 'Sales',
-        href: '/'
-      }
-    ]
-  },
-  {
-    title: 'Contact Us',
-    items: [
-      {
-        label: 'support@xiaomi.email',
-      },
-      {
-        label: 'affiliate@xiaomi.com',
-      },
-      {
-        img: '/images/install-app.png',
-      },
 
-    ]
-  }
-]
 
 const BRAND_LOGOS: Icon[] = [
   Icons.visa,
@@ -101,6 +23,88 @@ const BRAND_LOGOS: Icon[] = [
 ]
 
 const Footer = () => {
+  const t = useTranslations()
+
+  const NAV_FOOTER: INavItem[] = [
+    {
+      title: t('about_us'),
+      items: [
+        {
+          label: t('company_details'),
+          href: '/'
+        },
+        {
+          label: t('terms_conditions'),
+          href: '/'
+        },
+        {
+          label: t('privacy_policy'),
+          href: '/'
+        },
+        {
+          label: t('affiliate'),
+          href: '/'
+        }
+      ]
+    },
+    {
+      title: 'Help',
+      items: [
+        {
+          label: t('faq'),
+          href: '/'
+        },
+        {
+          label: t('aml_kyc'),
+          href: '/'
+        },
+        {
+          label: t('refund_policy'),
+          href: '/'
+        },
+        {
+          label: t('dispute_resolution'),
+          href: '/'
+        }
+      ]
+    },
+    {
+      title: t('our_products'),
+      items: [
+        {
+          label: t('product'),
+          href: '/'
+        },
+        {
+          label: t('contact'),
+          href: '/'
+        },
+        {
+          label: t('price'),
+          href: '/'
+        },
+        {
+          label: t('sales'),
+          href: '/'
+        }
+      ]
+    },
+    {
+      title: t('contact_us'),
+      items: [
+        {
+          label: 'support@xiaomi.email',
+        },
+        {
+          label: 'affiliate@xiaomi.com',
+        },
+        {
+          img: '/images/install-app.png',
+        },
+
+      ]
+    }
+  ]
 
   return (
     <footer className='border-t border-secondary-600'>
@@ -134,13 +138,13 @@ const Footer = () => {
             <Icons.eighteenPlus />
             <Icons.ssl />
           </div>
-          <span className='xl:text-sm text-xs text-neutral-200 xl:text-start text-center'>For designated models of Xiaomi smartphone, you can enjoy the warranty services for your device at designated Xiaomi.</span>
+          <span className='xl:text-sm text-xs text-neutral-200 xl:text-start text-center'>{t('secure_guide')}</span>
         </div>
 
-        <span className='xl:text-sm text-xs text-neutral-200 xl:text-start text-center'>Customers should provide a valid purchase proof and warranty card. After inspected by the Xiaomi authorizedservice center and confirmed that the smartphone meets the warranty conditions, you can enjoy the in-warranty service for free².Warranty determination rules are subjected to the local service center.</span>
+        <span className='xl:text-sm text-xs text-neutral-200 xl:text-start text-center'>{t('customer_guide')}</span>
 
         <div className='py-4 rounded-xl text-center bg-secondary-800 xl:text-sm text-xs'>
-          © Copyright 2025. All Rights Reserved
+          {t('copy_right')}
         </div>
 
         <div className="flex items-center justify-center xl:gap-6 gap-4 flex-wrap">

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { ROUTES } from '@/lib/routes';
+import { useTranslations } from 'next-intl';
 
 const customEase: [number, number, number, number] = [0.76, 0, 0.24, 1];
 
@@ -63,6 +64,7 @@ interface Props {
 export default function NavMenu({ className, visibleHeader }: Props) {
   const pathname = usePathname();
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const t = useTranslations()
 
   return (
     <motion.nav className={cn('flex flex-1 items-center justify-center')}>
@@ -89,7 +91,7 @@ export default function NavMenu({ className, visibleHeader }: Props) {
                 className
               )}
             >
-              <span className='text-sm'>{link.label}</span>
+              <span className='text-sm'>{t(link.label.toLowerCase())}</span>
             </Link>
 
             {/* Dropdown */}

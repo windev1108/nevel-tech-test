@@ -12,6 +12,7 @@ import { Icons } from '@/assets/icons';
 import { Button } from '../ui/button';
 import MenuDrawer from '../dialogs/MenuDrawer';
 import LanguageSelector from '../common/LanguageSelector';
+import { useTranslations } from 'next-intl';
 
 const customEase: Easing = [0.76, 0, 0.24, 1];
 
@@ -19,11 +20,10 @@ const Header = () => {
   const isMd = useIsMd();
   const [visibleHeader, setVisibleHeader] = useState(true);
   const [isScrollDown, setIsScrollDown] = useState(false);
-
   const [visibleMenu, { close: closeMenu, toggle: toggleMenu }] = useDisclosure(false);
-
   const { scrollY } = useScroll();
   const lastScroll = useRef(scrollY.get());
+  const t = useTranslations()
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const prev = lastScroll.current;
@@ -98,8 +98,8 @@ const Header = () => {
         </div>
 
         <div className="flex items-center xl:gap-4 gap-2">
-          <Button className="xl:min-w-[146px] min-w-[113px]">SIGN UP</Button>
-          <Button variant="outline" className="xl:min-w-[146px] min-w-[113px]">LOG IN</Button>
+          <Button className="xl:min-w-[146px] min-w-[113px]">{t('sign_up')}</Button>
+          <Button variant="outline" className="xl:min-w-[146px] min-w-[113px]">{t('login')}</Button>
           <LanguageSelector />
         </div>
       </div>

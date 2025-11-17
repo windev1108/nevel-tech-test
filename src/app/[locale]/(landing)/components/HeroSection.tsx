@@ -1,19 +1,18 @@
 'use client';
 import HeroDialog from '@/components/dialogs/HeroDialog';
-import { useDisclosure } from '@/hooks';
 import { IMAGES } from '@/lib/constants';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image'
 
 const HeroSection = () => {
-    const [opened, { open }] = useDisclosure()
-
+    const t = useTranslations()
 
     return (
         <div className="relative w-full xl:aspect-1600/642 aspect-390/339">
             <div className='absolute inset-0 top-11  flex flex-col items-center z-20'>
                 <span className='xl:text-5xl font-bold bg-linear-to-r from-white via-[#FFD3E3] to-[#FFEA9F] bg-clip-text text-transparent'>XIAOMI TV max Series</span>
                 <HeroDialog>
-                    <span className='xl:text-[32px] cursor-pointer hover:text-secondary-300 hover:scale-95 transition-all duration-300'>View to the max</span>
+                    <span className='xl:text-[32px] cursor-pointer hover:text-secondary-300 hover:scale-95 transition-all duration-300'>{t('view_to_the_max')}</span>
                 </HeroDialog>
 
             </div>

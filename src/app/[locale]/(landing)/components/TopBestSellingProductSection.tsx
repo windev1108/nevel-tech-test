@@ -1,4 +1,5 @@
 import RankingBoard, { RankingItem } from "@/components/common/RankingBoard";
+import { useTranslations } from "next-intl";
 
 // Demo data
 const MOCK_DATA: RankingItem[] = [
@@ -10,11 +11,12 @@ const MOCK_DATA: RankingItem[] = [
 ];
 
 const TopBestSellingProductSection = () => {
+    const t = useTranslations()
     return (
         <section className="relative container mx-auto">
             <div
                 className="bg-linear-to-r from-neutral-accent via-primary/10 to-neutral-accent text-center">
-                <span className="xl:text-2xl text-lg leading-12 italic font-extrabold uppercase text-primary">TOP BEST-SELLING PRODUCTS</span>
+                <span className="xl:text-2xl text-lg leading-12 italic font-extrabold uppercase text-primary">{t('top_best_selling_product')}</span>
             </div>
             <RankingBoard data={MOCK_DATA} />
         </section>

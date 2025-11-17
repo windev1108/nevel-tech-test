@@ -7,10 +7,12 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import BurgerMotion from '../motion/burger-motion';
 import { useDeferredValue } from 'react';
+import { useTranslations } from 'next-intl';
 
 const MenuDrawer = ({ className, opened, toggle }: { className?: string, opened: boolean, toggle: () => void }) => {
   const pathname = usePathname();
   const openedDeferred = useDeferredValue(opened)
+  const t = useTranslations()
 
   return (
     <Drawer open={openedDeferred} onOpenChange={toggle}>
@@ -40,7 +42,7 @@ const MenuDrawer = ({ className, opened, toggle }: { className?: string, opened:
                     className
                   )}
                 >
-                  <span className='text-sm'>{link.label}</span>
+                  <span className='text-sm'>{t(link.label.toLowerCase())}</span>
                 </Link>
 
               </div>
