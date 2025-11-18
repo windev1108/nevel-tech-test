@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn, getOrigin } from '@/lib/utils';
 import { AnimatePresence, type Variants, motion } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -70,7 +70,8 @@ export default function NavMenu({ className, visibleHeader }: Props) {
     <motion.nav className={cn('flex flex-1 items-center justify-center')}>
       {NAV_LINKS.map((link, idx) => {
         const hasSub = link.items && link.items.length > 0;
-        const isActive = pathname === link.href || (link.items && link.items.some((i) => pathname === i.href));
+        const origin = getOrigin(pathname)
+        const isActive = origin === link.href || (link.items && link.items.some((i) => origin === i.href));
 
         return (
           <div

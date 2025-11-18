@@ -3,7 +3,7 @@ import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '../ui/drawer'
 import { motion } from 'motion/react'
 import { usePathname } from 'next/navigation';
 import { NAV_LINKS } from '../Layout/NavMenu';
-import { cn } from '@/lib/utils';
+import { cn, getOrigin } from '@/lib/utils';
 import Link from 'next/link';
 import BurgerMotion from '../motion/burger-motion';
 import { useDeferredValue } from 'react';
@@ -23,7 +23,9 @@ const MenuDrawer = ({ className, opened, toggle }: { className?: string, opened:
         <DrawerTitle className='sr-only'></DrawerTitle>
         <motion.nav className={cn('flex flex-col items-center w-full p-5')}>
           {NAV_LINKS.map((link) => {
-            const isActive = pathname === link.href || (link.items && link.items.some((i) => pathname === i.href));
+            const origin = getOrigin(pathname)
+
+            const isActive = origin === link.href || (link.items && link.items.some((i) => origin === i.href));
             return (
               <div
                 key={link.href}
